@@ -28,7 +28,7 @@ class _AnimatedCrossFadeDemoState extends State<AnimatedCrossFadeDemo> {
     body: Center(
     child: AnimatedCrossFade(
     duration: Duration(seconds: 6),
-    firstChild: Image.network('assets/images/pizza1.avif'),
+    firstChild: Image.network('assets/images/pizza1.jpg'),
     secondChild: Image.network('assets/images/pizza2.jpg'),
     crossFadeState:
     _showFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
