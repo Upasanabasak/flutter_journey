@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 243, 203, 60),
         title: Text("Registration form"),
       ),
-      body: Column(
+      body: Wrap(
         children: [
           SizedBox(height: 20),
           TextField(
