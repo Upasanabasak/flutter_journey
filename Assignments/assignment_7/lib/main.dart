@@ -1,7 +1,7 @@
 // Import Flutter material design package
 import 'package:flutter/material.dart';
 
-// Main function – entry point of the Flutter application
+// Main function - entry point of the Flutter application
 void main() => runApp(const TodoApp());
 
 // Root widget of the app (stateless)
@@ -13,12 +13,12 @@ class TodoApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Todo List App',
       home: TodoHomePage(), // Home screen widget
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-// Main screen – stateful widget because todo list changes dynamically
+// Main screen - stateful widget because todo list changes dynamically
 class TodoHomePage extends StatefulWidget {
   const TodoHomePage({super.key});
 
