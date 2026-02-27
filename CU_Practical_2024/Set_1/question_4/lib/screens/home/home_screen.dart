@@ -10,46 +10,65 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
+  @override
+  // Dispose of the TextEditingControllers to free up resources when the widget is destroyed
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _ageController.dispose();
+    super.dispose();
+  }
 
-  // @override
-  // void dispose() {
-  //   _nameController.dispose();
-  //   _ageController.dispose();
-  //   super.dispose();
-  // }
+  /// Validates and checks the eligibility of a user based on their name and age inputs.
+  ///
+  /// This function performs the following operations:
+  /// - Retrieves and trims the name from the [_nameController] text field
+  /// - Attempts to parse the age from the [_ageController] text field as an integer
+  /// - Validates that both the name is not empty and age is a valid number
+  /// - Displays a red error SnackBar message if validation fails
+  /// - Returns early if validation fails, preventing further processing
+  ///
+  /// The function expects [_nameController] and [_ageController] to be initialized
+  /// TextEditingControllers. A valid SnackBar will be shown with the message
+  /// "Please enter valid Name and Age" if either the name field is empty or
+  /// the age cannot be parsed as an integer.
+  void _checkEligibility() {
+    final String name = _nameController.text.trim();
+    final int? age = int.tryParse(_ageController.text.trim());
 
-  // void _checkEligibility() {
-  //   String name = _nameController.text.trim();
-  //   int? age = int.tryParse(_ageController.text.trim());
+    if (name.isEmpty || age == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter valid Name and Age"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
 
-  //   if (name.isEmpty || age == null) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("Please enter valid Name and Age"),
-  //         backgroundColor: Colors.red,
-  //       ),
-  //     );
-  //     return;
-  //   }
+    if (age < 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter a valid (non-negative) age"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
 
-  //   String message;
-  //   if (age >= 18) {
-  //     message = "$name is Eligible for vote";
-  //   } else {
-  //     message = "$name is Not Eligible for vote";
-  //   }
+    final String message = age >= 18
+        ? "$name is eligible to vote"
+        : "$name is not eligible to vote";
 
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(
-  //       content: Text(message),
-  //       backgroundColor: age >= 18 ? Colors.green : Colors.orange,
-  //     ),
-  //   );
-  // }
-// void _checkEligibility() {
-//   if( age < 0)
-//     print()
-// }
+    // age=>18 ? elugible : not eligible
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: age >= 18 ? Colors.green : Colors.orange,
+      ),
+    );
+  }
 
   void _clearFields() {
     _nameController.clear();
@@ -69,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             TextField(
-              // controller: _nameController,
+              controller: _nameController,
               decoration: InputDecoration(
                 labelText: "Name",
                 border: OutlineInputBorder(
@@ -80,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
             TextField(
-              // controller: _ageController,
+              controller: _ageController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Age",
@@ -106,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Text("Clear"),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
