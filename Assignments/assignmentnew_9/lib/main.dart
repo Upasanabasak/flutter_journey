@@ -197,7 +197,7 @@ class BiodataScreen extends StatelessWidget {
                         _tableRow([
                           'Higher Secondary',
                           'WBBSE',
-                          '2022',
+                          '2024',
                           '83%',
                         ], alignments: educationalAlignments),
                         _tableRow([
