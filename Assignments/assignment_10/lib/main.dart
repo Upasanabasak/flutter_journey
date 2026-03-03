@@ -26,7 +26,7 @@ class ProfileApp extends StatelessWidget {
         ),
         useMaterial3: true,
         scaffoldBackgroundColor: _white,
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: _white,
           elevation: 0,
           shape: RoundedRectangleBorder(
