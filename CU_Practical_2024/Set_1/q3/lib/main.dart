@@ -1,3 +1,11 @@
+/*Develop a Flutter app using Dart programming to calculate the Body Mass Index 
+(BMI) based on user input for weight and height. The app should include input 
+fields for users to enter their weight (in kilograms) and height (in cm), a 
+button to trigger the BMI calculation and a display area for the BMI result 
+along with its classification (e.g. Underweight, Normal weight, Overweight, 
+Obese). If BMI < 18.5 show underweight, BMI 18.5<=24.9 show normal weight, 
+and BMI 24.9<= 29.9 show overweight, else obese. */
+
 import 'package:flutter/material.dart';
 
 void main() {

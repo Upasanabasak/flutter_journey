@@ -33,7 +33,7 @@ class _MusicHomeState extends State<MusicHome> {
     const Song(
       title: 'Sample Song',
       artist: 'Local Demo',
-      assetPath: 'assets/audio/sample_song.mp3',
+      assetPath: 'audio/sample_song.mp3',
     ),
   ];
 
@@ -112,10 +112,8 @@ class _MusicHomeState extends State<MusicHome> {
 
   Future<void> _handlePrevious() async {
     if (_playlist.isEmpty || !mounted) return;
-    setState(
-      () => _currentIndex =
-          (_currentIndex - 1 + _playlist.length) % _playlist.length,
-    );
+    setState(() =>
+        _currentIndex = (_currentIndex - 1 + _playlist.length) % _playlist.length);
     await _loadTrack(autoPlay: _isPlaying);
   }
 
@@ -151,10 +149,10 @@ class _MusicHomeState extends State<MusicHome> {
 
   @override
   Widget build(BuildContext context) {
-    final sliderMax = max(1, _duration.inMilliseconds.toDouble());
+    final sliderMax = max(1.0, _duration.inMilliseconds.toDouble());
     final sliderValue = min(
       sliderMax,
-      max(0, _position.inMilliseconds.toDouble()),
+      max(0.0, _position.inMilliseconds.toDouble()),
     );
 
     return Scaffold(
@@ -239,20 +237,24 @@ class _MusicHomeState extends State<MusicHome> {
                   ),
                   const SizedBox(width: 12),
                   _ControlButton(
-                    icon: _isPlaying
-                        ? Icons.pause_circle_filled
-                        : Icons.play_circle_fill,
+                    icon: _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_fill,
                     size: 72,
                     onPressed: _handlePlayPause,
                   ),
                   const SizedBox(width: 12),
-                  _ControlButton(icon: Icons.skip_next, onPressed: _handleNext),
+                  _ControlButton(
+                    icon: Icons.skip_next,
+                    onPressed: _handleNext,
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
               const Text(
                 'Playlist',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 8),
               Expanded(
@@ -271,24 +273,16 @@ class _MusicHomeState extends State<MusicHome> {
                             setState(() => _currentIndex = index);
                             await _loadTrack(autoPlay: true);
                           },
-                          tileColor: isActive
-                              ? Colors.deepPurpleAccent.withOpacity(0.3)
-                              : null,
+                          tileColor:
+                              isActive ? Colors.deepPurpleAccent.withOpacity(0.3) : null,
                           leading: CircleAvatar(
-                            backgroundColor:
-                                Colors.deepPurpleAccent.withOpacity(0.3),
-                            child: const Icon(
-                              Icons.music_note,
-                              color: Colors.white,
-                            ),
+                            backgroundColor: Colors.deepPurpleAccent.withOpacity(0.3),
+                            child: const Icon(Icons.music_note, color: Colors.white),
                           ),
                           title: Text(song.title),
                           subtitle: Text(song.artist),
                           trailing: isActive && _isPlaying
-                              ? const Icon(
-                                  Icons.equalizer,
-                                  color: Colors.deepPurpleAccent,
-                                )
+                              ? const Icon(Icons.equalizer, color: Colors.deepPurpleAccent)
                               : null,
                         );
                       },
@@ -310,17 +304,15 @@ class Song {
     required this.artist,
     this.assetPath,
     this.filePath,
-  }) : assert(
-          assetPath != null || filePath != null,
-          'Either assetPath or filePath must be provided',
-        );
+  })  : assert(assetPath != null || filePath != null,
+            'Either assetPath or filePath must be provided');
 
   final String title;
   final String artist;
   final String? assetPath;
   final String? filePath;
 
-  AudioSource get audioSource {
+  Source get audioSource {
     if (filePath != null) return DeviceFileSource(filePath!);
     if (assetPath != null) return AssetSource(assetPath!);
     throw StateError('No source defined for $title');
@@ -374,7 +366,11 @@ class _NowPlayingCard extends StatelessWidget {
               shape: BoxShape.circle,
               color: Colors.white24,
             ),
-            child: const Icon(Icons.album, size: 42, color: Colors.white),
+            child: const Icon(
+              Icons.album,
+              size: 42,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(width: 18),
           Expanded(
@@ -392,12 +388,18 @@ class _NowPlayingCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   song.artist,
-                  style: const TextStyle(fontSize: 14, color: Colors.white70),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   isPlaying ? 'Now playing' : 'Paused',
-                  style: const TextStyle(fontSize: 12, color: Colors.white60),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.white60,
+                  ),
                 ),
               ],
             ),
@@ -431,7 +433,11 @@ class _ControlButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.white10,
         ),
-        child: Icon(icon, size: size * 0.6, color: Colors.white),
+        child: Icon(
+          icon,
+          size: size * 0.6,
+          color: Colors.white,
+        ),
       ),
     );
   }
