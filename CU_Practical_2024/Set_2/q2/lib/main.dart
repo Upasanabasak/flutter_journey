@@ -7,6 +7,7 @@ the calculated result.
 */
 
 import 'package:flutter/material.dart';
+import 'dart:math'; // Required for the value of PI
 
 void main() {
   runApp(const CalculationApp());
@@ -32,16 +33,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-final TextEditingController _radiousController = TextEditingController();
+  final TextEditingController _radiusController = TextEditingController();
+  final List<String> _units = ['Area of a circle', 'Circumference of a circle'];
+
+  String show = 'Area of a circle';
+  String _result = "0.0"; // Added to store the calculation result
+
+  void _calculate() {
+    double? radius = double.tryParse(_radiusController.text);
+
+    if (radius == null || radius <= 0) {
+      setState(() {
+        _result = "Please enter a valid radius";
+      });
+      return;
+    }
+
+    double calculatedValue;
+    if (show == 'Area of a circle') {
+      // Formula: π * r^2
+      calculatedValue = pi * pow(radius, 2);
+    } else {
+      // Formula: 2 * π * r
+      calculatedValue = 2 * pi * radius;
+    }
+
+    setState(() {
+      _result = calculatedValue.toStringAsFixed(2); // Round to 2 decimal places
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculation'),
+        title: const Text('Calculation'),
         backgroundColor: Colors.orangeAccent,
         centerTitle: true,
-        titleTextStyle: TextStyle(
+        titleTextStyle: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 25,
           fontStyle: FontStyle.italic,
@@ -52,36 +81,88 @@ final TextEditingController _radiousController = TextEditingController();
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SizedBox(height: 10,),
+            const SizedBox(height: 10),
             TextField(
-              controller: _radiousController,
+              controller: _radiusController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Enter radious value',
-                prefixIcon: IconButton(onPressed: () {},
-                icon: Icon(Icons.numbers),
-                ),
+                labelText: 'Enter radius value',
+                prefixIcon: const Icon(Icons.numbers),
                 prefixIconColor: Colors.orangeAccent,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Select Option',
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.orangeAccent,
+                        ),
+                      ),
+                      DropdownButton<String>(
+                        value: show,
+                        isExpanded: true,
+                        items: _units.map((String unit) {
+                          return DropdownMenuItem(
+                            value: unit,
+                            child: Text(unit),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            show = newValue!;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  ),
+                ),
               ],
+            ),
+            const SizedBox(height: 30),
+            // Added Calculate Button
+            ElevatedButton(
+              onPressed: _calculate,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orangeAccent,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 15,
+                ),
+              ),
+              child: const Text(
+                'Calculate',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 30),
+            // Added Result Display
+            const Text(
+              "Result:",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              _result,
+              style: const TextStyle(
+                fontSize: 35,
+                color: Colors.orangeAccent,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
-        ),
+      ),
     );
   }
 }
