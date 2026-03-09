@@ -362,7 +362,7 @@ class _NowPlayingCard extends StatelessWidget {
           Container(
             height: 90,
             width: 90,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white24,
             ),
@@ -429,7 +429,7 @@ class _ControlButton extends StatelessWidget {
       child: Ink(
         width: size,
         height: size,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white10,
         ),
