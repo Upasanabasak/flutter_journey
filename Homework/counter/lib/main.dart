@@ -59,7 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 // shadows: Colors.black12
               ),
             ),
-            ElevatedButton(onPressed: counter, child: Text(button)),
+            ElevatedButton(onPressed: counter, child: Text(button),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+              backgroundColor: Colors.pinkAccent,
+              shadowColor:  Color.fromARGB(255, 12, 225, 12),
+              foregroundColor: Colors.white,
+            ),
+            ),
           ],
         ),
       ),

@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Temperature Conversion'),
+        centerTitle: true,
         backgroundColor: Colors.blueAccent,
       ),
       body: Padding(
@@ -66,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 labelText: 'Enter Value',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
               ),
             ),
 
@@ -129,7 +132,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
             ElevatedButton(
               onPressed: _convertTemp,
-              child: const Text('Convert'),
+              child: const Text('Convert',
+              style: TextStyle(
+                fontSize: 16,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.1,
+              ),
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                shadowColor: Colors.black,
+              ),
             ),
 
             const SizedBox(height: 20),
