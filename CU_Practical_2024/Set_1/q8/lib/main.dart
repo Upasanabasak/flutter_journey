@@ -9,7 +9,7 @@ Ensure that the app displays the converted amount
 
 import 'package:flutter/material.dart';
 
-void main () {
+void main() {
   runApp(const CurrencyApp());
 }
 
@@ -39,27 +39,24 @@ class _homeScreenState extends State<homeScreen> {
   String _toUnit = 'US Currency (USD)';
   String _result = '';
 
-  void conversion () {
+  void conversion() {
     double input = double.tryParse(_currencyController.text) ?? 0.0;
     double total = 0.0;
 
     setState(() {
-      if(_fromUnit == _toUnit)
-      {
+      if (_fromUnit == _toUnit) {
         _result = "Please select different curriences.";
-      }
-      else if(_fromUnit == 'Indian currency (INR)' && _toUnit == 'US Currency (USD)')
-      {
+      } else if (_fromUnit == 'Indian currency (INR)' &&
+          _toUnit == 'US Currency (USD)') {
         total = input / 87;
         _result = "Result: ${total.toStringAsFixed(2)} USD";
-      } 
-      else
-      {
+      } else {
         total = input * 87;
         _result = "Result: ${total.toStringAsFixed(2)} IND";
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,13 +81,15 @@ class _homeScreenState extends State<homeScreen> {
               controller: _currencyController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Enter value',
+                labelText: 'Enter number',
+                prefixIcon: Icon(Icons.numbers),
+                prefixIconColor: Colors.amber,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
-                )
+                ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -104,56 +103,75 @@ class _homeScreenState extends State<homeScreen> {
                         items: _units.map((String unit) {
                           return DropdownMenuItem(
                             value: unit,
-                            child: Text(unit));
+                            child: Text(unit),
+                          );
                         }).toList(),
                         onChanged: (String? newValue) {
                           setState(() {
                             _fromUnit = newValue!;
                           });
-                        })
+                        },
+                      ),
                     ],
-                  )
                   ),
-                  SizedBox(height: 200,),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('To Unit'),
-                        DropdownButton<String>(
-                          value: _toUnit,
-                          isExpanded: true,
-                          items: _units.map((String unit) {
-                            return DropdownMenuItem(
-                              value: unit,
-                              child: Text(unit));
-                          }).toList(), 
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _toUnit = newValue!;
-                            });
-                          })
-                      ],
-                    )
-                    )
+                ),
+                SizedBox(height: 200),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('To Unit'),
+                      DropdownButton<String>(
+                        value: _toUnit,
+                        isExpanded: true,
+                        items: _units.map((String unit) {
+                          return DropdownMenuItem(
+                            value: unit,
+                            child: Text(unit),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _toUnit = newValue!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: conversion, child: Text('Convert'))
+                ElevatedButton(
+                  onPressed: conversion, 
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 100,
+                      vertical: 15,
+                    ),
+                    backgroundColor: Colors.yellow,
+                  ),
+                  child: Text('Convert',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.1,
+                  ),)),
               ],
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 15),
             Text(
               _result,
               style: TextStyle(
                 color: Colors.amberAccent,
                 fontSize: 30,
-                fontStyle: FontStyle.italic
+                fontStyle: FontStyle.italic,
               ),
-            )
+            ),
           ],
         ),
       ),

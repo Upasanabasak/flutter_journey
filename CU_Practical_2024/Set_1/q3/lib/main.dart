@@ -70,6 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
         const SnackBar(
           content: Text(
             'Must enter greater than zero for both weight and height',
+            style: TextStyle(
+              color: Colors.red,
+              backgroundColor: Colors.blueGrey,
+            ),
           ),
         ),
       );
@@ -108,7 +112,18 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: bmiCalculation,
-              child: const Text('Calculate BMI'),
+              child: const Text('Calculate BMI',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 1.1,
+                fontStyle: FontStyle.italic,
+              ),
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                backgroundColor: Colors.green,
+              ),
             ),
             const SizedBox(height: 40),
 
